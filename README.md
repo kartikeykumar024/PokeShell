@@ -1,0 +1,1 @@
+A terminal-based Pokémon battle game built in Python. Battle AI opponents using real PokéAPI data, choose from multiple difficulty levels, manage status effects, and enjoy strategic turn-based combat. Designed with a modular architecture for easy expansion and future features.
