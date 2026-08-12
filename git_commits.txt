@@ -1,0 +1,42 @@
+
+# 1. feat:     -> (FEATURE) Adding a brand new function or logic.
+#                 Example: git commit -m "feat: add domain expansion mechanics"
+
+# 2. fix:      -> (BUG FIX) Fixing something that was broken.
+#                 Example: git commit -m "fix: resolve player health bar flickering"
+
+# 3. refactor: -> (CLEANUP) Changing code to make it better/cleaner, NOT adding features.
+#                 Example: git commit -m "refactor: simplify damage calculation loop"
+
+# 4. ui:       -> (USER INTERFACE) Changing how things LOOK (colors, fonts, images).
+#                 Example: git commit -m "ui: update main menu background to JJK theme"
+
+# 5. docs:     -> (DOCUMENTATION) Updating the README or code comments.
+#                 Example: git commit -m "docs: add installation instructions for pygame"
+
+# 6. chore:    -> (MAINTENANCE) Boring stuff like updating .gitignore or file names.
+#                 Example: git commit -m "chore: ignore pycache folders"
+
+# 7. perf:     -> (PERFORMANCE) Making the game run faster or use less RAM.
+#                 Example: git commit -m "perf: optimize sprite loading speed"
+
+# 8. test:     -> (TESTING) Adding tests to make sure your code works.
+#                 Example: git commit -m "test: verify login password hashing"
+
+"""
+===============================================================================
+THE 3 GOLDEN RULES OF THE MESSAGE BODY
+===============================================================================
+"""
+
+# RULE A: Use the "Imperative Mood"
+# Write the message like you are giving a command:
+# -> GOOD: "feat: add battle system"
+# -> BAD:  "feat: added battle system" or "feat: adding battle system"
+
+# RULE B: Keep the first line short
+# Try to keep the commit message under 50 characters.
+
+# RULE C: Atomic Commits
+# If you fixed a bug AND added a feature, DO NOT commit them together.
+# Commit the fix first, then commit the feature.

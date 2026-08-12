@@ -1,0 +1,52 @@
+
+# --- SETUP & CONFIGURATION (The "Foundation" Commands) ---
+# git init                        -> Initialize a new local Git repository in this folder.
+# git remote add origin [URL]     -> Link this local folder to your GitHub repo nickname "origin".
+# git remote -v                   -> Show the URLs of the GitHub repo you are connected to.
+# git remote set-url origin [URL] -> Update the link to GitHub (use if you rename your repo).
+# git config --global user.name   -> Set your name for the commit history.
+# git config --global user.email  -> Set your email for the commit history.
+
+
+# --- THE DAILY WORKFLOW (The "A-C-P" Loop) ---
+# git status                      -> Check which files are modified (red) or staged (green).
+# git add .                       -> Stage ALL changes in the folder for the next save.
+# git add [file]                  -> Stage only one specific file.
+# git commit -m "[msg]"           -> Save staged changes locally with a descriptive label.
+# git push origin [branch]        -> Upload your local saved commits to GitHub.
+# git push -u origin [branch]     -> Upload and link the branch to GitHub for the first time.
+# git pull                        -> Download and merge latest changes from GitHub to your PC.
+# git fetch                       -> Check for updates on GitHub without merging them.
+
+
+# --- BRANCHING & THE MULTIVERSE (For testing new JJK features) ---
+# git branch                      -> List local branches (the * shows your current location).
+# git branch -a                   -> List all branches (including the red ones on GitHub).
+# git branch [name]               -> Create a new branch but stay where you are.
+# git checkout -b [name]          -> Create a new branch AND switch to it immediately.
+# git checkout [name]             -> Switch from your current branch to an existing one.
+# git merge [name]                -> Combine code from another branch into your current one.
+# git branch -d [name]            -> Delete a local branch (do this after merging).
+# git branch -M main              -> Force rename your current branch to "main".
+
+
+# --- HISTORY & INSPECTION (The "Time Machine") ---
+# git log                         -> View the full history of all commits.
+# git log --oneline               -> View history in a clean, compact, one-line list.
+# git diff                        -> See the exact line changes made since the last commit.
+# git show [commit-id]            -> Inspect the specific changes inside one past commit.
+
+
+# --- UNDO & EMERGENCY (The "Safety Net") ---
+# q                               -> The "Exit" key; use to quit git log or help screens.
+# git restore [file]              -> Discard unsaved changes and revert a file to last save.
+# git stash                       -> Temporarily "hide" unsaved work to clear the screen.
+# git stash pop                   -> Bring your hidden "stashed" work back to your screen.
+# git merge --abort               -> Cancel a messy merge and go back to safety.
+
+
+def git_reminder():
+    print("Always remember: Add -> Commit -> Push")
+    print("If you get stuck in a log, just press 'q'!")
+
+# ===============================================================================
