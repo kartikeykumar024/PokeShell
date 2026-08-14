@@ -1,0 +1,16 @@
+### Project tracking notes
+
+git_commands.txt
+git_commits.txt 
+
+### Sensitive user credential storage
+
+UserCredentials.json 
+
+### Live player save data and tracking states
+
+playerstats.json 
+
+### Python cache and temporary files
+
+**pycache**/
