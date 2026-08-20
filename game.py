@@ -3,12 +3,6 @@ from user_data_manager import FileManager, FileMissingError, Stats, FileCorrupte
 
 file_manager = FileManager()
 
-try:
-    players_stats = file_manager.load_player_stats()
-except (FileMissingError, FileCorruptedError):
-    stats = {}
-
-
 try:    
     credentials = file_manager.load_user_credentials()
 except (FileMissingError, FileCorruptedError):
@@ -16,6 +10,13 @@ except (FileMissingError, FileCorruptedError):
 
 
 auth_manager = AuthManager(credentials)
+
+
+try:
+    player_stats = file_manager.load_player_stats()
+except (FileMissingError, FileCorruptedError):
+    player_stats = {}
+
 
 
 print("Welcome to the game! This game is A terminal-based Pokémon battle game built in Python.\n"\
@@ -72,12 +73,18 @@ def page_credentials_draw(pass_allowed, passkey_allowed, newpass_allowed):
         return username, password
 
 def signup_menu_draw():
-        username, password, passkey = page_credentials_draw(True, True, False)
         while True:
+
+            username, password, passkey = page_credentials_draw(True, True, False)
             result = auth_manager.username_verifier(username)
 
             if result:
+
+                print("login successful")
+                stats = Stats(auth_manager.currentuser, player_stats)
+
                 break
+
             else:
                 print("Invalid combination of fields! LOSER!")
                 continue
@@ -105,9 +112,14 @@ def signin_menu_draw():
 
                         if not result:
                             print("Invalid combination of fields! LOSER!")
+                            print("login successful")
+
                             continue
+
                         else:
+                            stats = Stats(auth_manager.currentuser, player_stats)
                             break
+
         
             elif forget_password == "no":
                 while True:
@@ -118,6 +130,10 @@ def signin_menu_draw():
 
                     if result:
                         auth_manager.currentuser = username
+
+                        print("login successful")
+                        stats = Stats(auth_manager.currentuser, player_stats)
+
                         break
                     
                     else:
@@ -142,5 +158,42 @@ while True:
                     print("What a loser! Cant even select properly!")
 
         else:
-                print("login successful")
 
+
+                menu = int(input("\n\n1. Play\n2. Accounts\n\n"))
+
+                if menu == 1:
+                    pass
+
+                elif menu == 2:
+                    sub_menu = int(input("\n 1. Change Password\n2. Stats\n3. Logout"))
+
+                    if sub_menu == 1:
+                         
+                        while True:
+                        
+                            username, new_password, passkey = page_credentials_draw(False, True, True)
+                        
+                            result, auth_manager.credentials = auth_manager.forgot_password(username, passkey, new_password)
+                            file_manager.save_user_credentials(credentials)
+                        
+                        
+                            if not result:
+                                print("Invalid combination of fields! LOSER!")
+                                continue
+
+                            else:
+                                break
+
+                    elif sub_menu == 2:
+
+                        if not player_stats:
+                             
+                            for keys, value in player_stats.items():
+                                print(f"{keys} : {value}")
+
+                        else:
+                            print("WTF DO YOU WANNA SEE WITHOUT PLAYING A SINGLE GAME!!!!!")
+
+                    elif sub_menu == 3:
+                        auth_manager.currentuser = None
