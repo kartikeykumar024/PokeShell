@@ -163,7 +163,17 @@ while True:
                 menu = int(input("\n\n1. Play\n2. Accounts\n\n"))
 
                 if menu == 1:
-                    pass
+                    sub_menu = int(input("""CHOOSE FROM THE FOLLOWING:
+1. Charizard 🔥🪽 — Fire/Flying — fast offensive attacker
+2. Garchomp 🐉🌍 — Dragon/Ground — powerful physical attacker
+3. Lucario 🥊⚙️ — Fighting/Steel — versatile attacker
+4. Gengar 👻☠️ — Ghost/Poison — fast special attacker
+5. Gyarados 🌊🪽 — Water/Flying — strong setup sweeper
+6. Alakazam 🧠 — Psychic — extremely fast special attacker
+7. Tyranitar 🪨🌑 — Rock/Dark — bulky powerhouse
+8. Scizor 🐛⚙️ — Bug/Steel — physical attacker with priority potential
+9. Greninja 🌊🌑 — Water/Dark — speed + versatility
+10. Mamoswine 🧊🌍 — Ice/Ground — excellent coverage and physical damage"""))
 
                 elif menu == 2:
                     sub_menu = int(input("\n 1. Change Password\n2. Stats\n3. Logout"))
@@ -187,7 +197,7 @@ while True:
 
                     elif sub_menu == 2:
 
-                        if not player_stats:
+                        if player_stats:
                              
                             for keys, value in player_stats.items():
                                 print(f"{keys} : {value}")
