@@ -67,7 +67,7 @@ class AuthManager():
         else:
             return True
         
-    def pass_verifier(self,credential):
+    def field_verifier(self,credential):
         if credential:
             return True
         else:
@@ -127,5 +127,8 @@ class Stats:
                 "wins":1 if result == "win" else 0,
                 "losses":1 if result == "loss" else 0
             }
+
+            self.stats[self.username]["elo"] = 1000
+
 
         return self.stats
