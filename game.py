@@ -1,4 +1,5 @@
 from user_data_manager import FileManager, FileMissingError, Stats, FileCorruptedError, AuthManager
+from poke_api import get_available_moves, get_move_data, get_pokemon_stats
 
 
 file_manager = FileManager()
@@ -163,7 +164,7 @@ while True:
                 menu = int(input("\n\n1. Play\n2. Accounts\n\n"))
 
                 if menu == 1:
-                    sub_menu = int(input("""CHOOSE FROM THE FOLLOWING:
+                    user_pokemon = input("""CHOOSE FROM THE FOLLOWING:
 1. Charizard 🔥🪽 — Fire/Flying — fast offensive attacker
 2. Garchomp 🐉🌍 — Dragon/Ground — powerful physical attacker
 3. Lucario 🥊⚙️ — Fighting/Steel — versatile attacker
@@ -173,10 +174,36 @@ while True:
 7. Tyranitar 🪨🌑 — Rock/Dark — bulky powerhouse
 8. Scizor 🐛⚙️ — Bug/Steel — physical attacker with priority potential
 9. Greninja 🌊🌑 — Water/Dark — speed + versatility
-10. Mamoswine 🧊🌍 — Ice/Ground — excellent coverage and physical damage"""))
+10. Mamoswine 🧊🌍 — Ice/Ground — excellent coverage and physical damage""")
+
+
+                    difficulty = int(input("Difficulty\n1. Easy\n2. Medium\n3. Hard\n4. Extreme\n"))
+                    
+                    pokemon_stats, pokemon_data = get_pokemon_stats(user_pokemon)
+                    available_moves = get_available_moves(pokemon_stats, pokemon_data)
+
+                
+                    print("Enter the name of 4 moves, you wanna chose for the fight")
+                    selected_moves = {}
+                    
+                    for name in available_moves.keys():
+                        print(f"{name}\n")
+                        
+                        
+                    for name, url in available_moves.items():
+                        print(name)
+                        yn = input("would you like to add this move to ur set? ")
+                        
+                        if yn == "yes":
+                            selected_moves[name] = url   
+                        
+                        if len(selected_moves.keys()) == 4:
+                            print(selected_moves)
+                            break
+
 
                 elif menu == 2:
-                    sub_menu = int(input("\n 1. Change Password\n2. Stats\n3. Logout"))
+                    sub_menu = int(input("\n1. Change Password\n2. Stats\n3. Logout"))
 
                     if sub_menu == 1:
                          
