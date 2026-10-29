@@ -2,20 +2,84 @@ import requests
 
 url = 'https://pokeapi.co/api/v2/pokemon/'
 
-def get_pokemon_stats(pokemon_name):
 
-    pokemon_data = requests.get(f"{url}{pokemon_name}").json()    
+class PokemonData():
+    
+    def __init__(self, pokemon_name):
+        
+        self.pokemon_name = pokemon_name
+        
+        self.pokemon_data = requests.get(f"{url}{self.pokemon_name}").json()
+                
+        self.pokemon_stats = {}
+        
+        self.x2_types = []
+        self.half_types = []
+        self.immune_types = []
 
-    pokemon_stats = {"name" : pokemon_name,
-                     "hp": pokemon_data["stats"][0]["base_stat"],
-                     "atk": pokemon_data["stats"][1]["base_stat"],
-                     "sp. atk": pokemon_data["stats"][1]["base_stat"],
-                     "def": pokemon_data["stats"][4]["base_stat"],
-                     "sp. def": pokemon_data["stats"][4]["base_stat"],
-                     "speed": pokemon_data["stats"][5]["base_stat"],
-                    }
 
-    return pokemon_stats, pokemon_data
+    @staticmethod
+    def loop_data1(relation_data, category):
+        
+        for i in range(0, len(relation_data)):
+            category.append(relation_data[i]["name"])         
+            
+
+    def damage_relation(self, type_data):
+        
+        
+        for relation_name, relation_dict in type_data["damage_relations"].items():
+            
+            if relation_name == "double_damage_from":
+                self.loop_data1(relation_dict, self.x2_types)
+                
+                
+            if relation_name == "half_damage_from":
+                self.loop_data1(relation_dict, self.half_moves) 
+                
+            
+            if relation_name == "no_damage_from":
+                self.loop_data1(relation_dict, self.immune_moves)
+                
+                                
+        
+        
+    def get_pokemon_stats(self):
+
+        pokemon_data = requests.get(f"{url}{self.pokemon_name}").json()
+        
+        type1_url = pokemon_data["types"][0]["type"]["url"]
+        type2_url =  pokemon_data["types"][1]["type"]["url"]
+        
+        type1_data = requests.get(type1_url).json()
+        type2_data = requests.get(type2_url).json()
+
+        type1 =  pokemon_data["types"][0]["type"]["name"]
+        type2 =  pokemon_data["types"][1]["type"]["name"]
+        
+        self.damage_relation(type1_data)
+        self.damage_relation(type2_data)
+        
+        
+        print(f"{self.x2_types},\n{self.half_moves}  \n {self.immune_moves} ")
+        
+
+        pokemon_stats = {"name" : self.pokemon_name,
+                        "hp": pokemon_data["stats"][0]["base_stat"],
+                        "atk": pokemon_data["stats"][1]["base_stat"],
+                        "sp. atk": pokemon_data["stats"][1]["base_stat"],
+                        "def": pokemon_data["stats"][4]["base_stat"],
+                        "sp. def": pokemon_data["stats"][4]["base_stat"],
+                        "speed": pokemon_data["stats"][5]["base_stat"],
+                        "type1": type1,
+                        "type2": type2, 
+                        "strong": self.x2_types,
+                        "weak": self.half_types,
+                        "immune": self.immune_types
+                        }
+
+        return pokemon_stats, pokemon_data
+    
 
 
 def get_available_moves(pokemon_stats, pokemon_data):
@@ -45,7 +109,6 @@ def get_move_data(selected_moves):
     moves_dict = {}
     for name, url in selected_moves.items():
 
-
         move_data = requests.get(url).json()
 
         moves_dict[name] = {"power": move_data["power"],
@@ -59,8 +122,4 @@ def get_move_data(selected_moves):
 
 
     return moves_dict
-
-pokemon_stats, pokemon_data = get_pokemon_stats("charizard")
-available_moves = get_available_moves(pokemon_stats, pokemon_data)
-moves_dict = get_move_data(available_moves)
-print(moves_dict)
+ 
