@@ -35,11 +35,11 @@ class PokemonData():
                 
                 
             if relation_name == "half_damage_from":
-                self.loop_data1(relation_dict, self.half_moves) 
+                self.loop_data1(relation_dict, self.half_types) 
                 
             
             if relation_name == "no_damage_from":
-                self.loop_data1(relation_dict, self.immune_moves)
+                self.loop_data1(relation_dict, self.immune_types)
                 
                                 
         

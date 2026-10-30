@@ -1,5 +1,7 @@
+
+from battle_mechs import Computer, Battle_Mechanincs
 from user_data_manager import FileManager, FileMissingError, Stats, FileCorruptedError, AuthManager
-from poke_api import get_available_moves, get_move_data, get_pokemon_stats
+from poke_api import PokemonData
 
 
 file_manager = FileManager()
@@ -47,22 +49,22 @@ def credential_check(field, func):
 
 def page_credentials_draw(pass_allowed, passkey_allowed, newpass_allowed):
 
-        username = input("Username: ")
+        username = input("Username: ").lower().strip()
         credential_check("Username", auth_manager.field_verifier(username))
 
         if pass_allowed:
         
-            password = input("Password: ")
+            password = input("Password: ").lower().strip()
             credential_check("Password", auth_manager.field_verifier(password))
 
         if passkey_allowed:
                 
-                passkey = input("Passkey: ")
+                passkey = input("Passkey: ").lower().strip()
                 credential_check("Passkey", auth_manager.field_verifier(passkey))
 
                 if newpass_allowed:
                         
-                        new_password = input("New Password: ")
+                        new_password = input("New Password: ").lower().strip()
                         credential_check("New Password", auth_manager.field_verifier(new_password))
 
                         return username, new_password, passkey
@@ -170,40 +172,46 @@ while True:
 3. Lucario 🥊⚙️ — Fighting/Steel — versatile attacker
 4. Gengar 👻☠️ — Ghost/Poison — fast special attacker
 5. Gyarados 🌊🪽 — Water/Flying — strong setup sweeper
-6. Alakazam 🧠 — Psychic — extremely fast special attacker
+6. Metagross 🤖🔮 — Steel/Psychic — bulky physical attacker with excellent power and durability
 7. Tyranitar 🪨🌑 — Rock/Dark — bulky powerhouse
 8. Scizor 🐛⚙️ — Bug/Steel — physical attacker with priority potential
 9. Greninja 🌊🌑 — Water/Dark — speed + versatility
-10. Mamoswine 🧊🌍 — Ice/Ground — excellent coverage and physical damage""")
-
+10. Mamoswine 🧊🌍 — Ice/Ground — excellent coverage and physical damage \n\n:::""").lower().strip()
 
                     difficulty = int(input("Difficulty\n1. Easy\n2. Medium\n3. Hard\n4. Extreme\n"))
+
+                    #computer = PokemonData(comp_pokemon)
+                    #battle_mechs = Battle_Mechanincs(player, ai)
                     
-                    pokemon_stats, pokemon_data = get_pokemon_stats(user_pokemon)
-                    available_moves = get_available_moves(pokemon_stats, pokemon_data)
+                    player = PokemonData(user_pokemon)
+                    
+                    
+                    
+                    player.get_pokemon_stats()
+                    available_moves = player.get_available_moves()
 
                 
                     print("Enter the name of 4 moves, you wanna chose for the fight")
                     selected_moves = {}
                     
-                    for name in available_moves.keys():
+                    for i, name in enumerate(available_moves.keys(), start=1):
                         print(f"{name}\n")
                         
                         
                     for name, url in available_moves.items():
                         print(name)
-                        yn = input("would you like to add this move to ur set? ")
+                        yn = input("would you like to add this move to ur set? ").lower().strip()
                         
                         if yn == "yes":
                             selected_moves[name] = url   
                         
                         if len(selected_moves.keys()) == 4:
-                            print(selected_moves)
                             break
+                    
 
 
                 elif menu == 2:
-                    sub_menu = int(input("\n1. Change Password\n2. Stats\n3. Logout"))
+                    sub_menu = int(input("\n1. Change Password\n2. Stats\n3. Logout")).lower().strip()
 
                     if sub_menu == 1:
                          
