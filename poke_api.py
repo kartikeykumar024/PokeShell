@@ -7,12 +7,12 @@ class PokemonData():
     
     def __init__(self, pokemon_name):
         
+        self.moves_dict = {}
+        
         self.pokemon_name = pokemon_name
         
         self.pokemon_data = requests.get(f"{url}{self.pokemon_name}").json()
-                
-        self.pokemon_stats = {}
-        
+                        
         self.x2_types = []
         self.half_types = []
         self.immune_types = []
@@ -59,67 +59,52 @@ class PokemonData():
         
         self.damage_relation(type1_data)
         self.damage_relation(type2_data)
+                
         
-        
-        print(f"{self.x2_types},\n{self.half_moves}  \n {self.immune_moves} ")
-        
-
-        pokemon_stats = {"name" : self.pokemon_name,
-                        "hp": pokemon_data["stats"][0]["base_stat"],
-                        "atk": pokemon_data["stats"][1]["base_stat"],
-                        "sp. atk": pokemon_data["stats"][1]["base_stat"],
-                        "def": pokemon_data["stats"][4]["base_stat"],
-                        "sp. def": pokemon_data["stats"][4]["base_stat"],
-                        "speed": pokemon_data["stats"][5]["base_stat"],
-                        "type1": type1,
-                        "type2": type2, 
-                        "strong": self.x2_types,
-                        "weak": self.half_types,
-                        "immune": self.immune_types
-                        }
-
-        return pokemon_stats, pokemon_data
-    
+        self.max_hp =  pokemon_data["stats"][0]["base_stat"]
+        self.hp =  pokemon_data["stats"][0]["base_stat"]
+        self.attack = pokemon_data["stats"][1]["base_stat"]
+        self.sp_atk = pokemon_data["stats"][1]["base_stat"]
+        self.defense = pokemon_data["stats"][4]["base_stat"]
+        self.sp_def = pokemon_data["stats"][5]["base_stat"]
+        self.speed = pokemon_data["stats"][5]["base_stat"]
+        self.type = [type1, type2]    
 
 
-def get_available_moves(pokemon_stats, pokemon_data):
 
-    available_moves = {}
+    def get_available_moves(self):
 
-    for moves in pokemon_data["moves"]:
+        available_moves = {}
 
-        for fields in moves["version_group_details"]:
+        for moves in self.pokemon_data["moves"]:
 
-            if fields["version_group"]["name"] == "sword-shield":
-                if fields["move_learn_method"]["name"] == "level-up":
-            
-                    move_name = moves["move"]["name"]
-                    move_url = moves["move"]["url"]
+            for fields in moves["version_group_details"]:
 
-                    available_moves[move_name] = move_url
+                if fields["version_group"]["name"] == "sword-shield":
+                    if fields["move_learn_method"]["name"] == "level-up":
+                
+                        move_name = moves["move"]["name"]
+                        move_url = moves["move"]["url"]
 
-        if len(available_moves.keys()) == 8:
-            break
+                        available_moves[move_name] = move_url
 
-    return available_moves
+            if len(available_moves.keys()) == 8:
+                break
 
-
-def get_move_data(selected_moves):
-
-    moves_dict = {}
-    for name, url in selected_moves.items():
-
-        move_data = requests.get(url).json()
-
-        moves_dict[name] = {"power": move_data["power"],
-                            "pp": move_data["pp"],
-                            "accuracy": move_data["accuracy"],
-                            "type": move_data["type"]["name"],
-                            "dmg_class": move_data["damage_class"]["name"],
-                            "ailment": move_data["meta"]["ailment"]["name"],
-                            "alm_chance": move_data["meta"]["ailment_chance"]}
-        
+        return available_moves
 
 
-    return moves_dict
- 
+    def get_move_data(self, selected_moves):
+
+        for name, url in selected_moves.items():
+
+            move_data = requests.get(url).json()
+
+
+            self.moves_dict[name] = {"power": move_data["power"],
+                                "pp": move_data["pp"],
+                                "accuracy": move_data["accuracy"],
+                                "type": move_data["type"]["name"],
+                                "dmg_class": move_data["damage_class"]["name"],
+                                "ailment": move_data["meta"]["ailment"]["name"],
+                                "alm_chance": move_data["meta"]["ailment_chance"]}
