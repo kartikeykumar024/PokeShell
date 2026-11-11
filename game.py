@@ -164,21 +164,30 @@ while True:
 
 
                 menu = int(input("\n\n1. Play\n2. Accounts\n\n"))
+            
 
                 if menu == 1:
-                    user_pokemon = input("""CHOOSE FROM THE FOLLOWING:
-1. Charizard 🔥🪽 — Fire/Flying — fast offensive attacker
-2. Garchomp 🐉🌍 — Dragon/Ground — powerful physical attacker
-3. Lucario 🥊⚙️ — Fighting/Steel — versatile attacker
-4. Gengar 👻☠️ — Ghost/Poison — fast special attacker
-5. Gyarados 🌊🪽 — Water/Flying — strong setup sweeper
-6. Metagross 🤖🔮 — Steel/Psychic — bulky physical attacker with excellent power and durability
-7. Tyranitar 🪨🌑 — Rock/Dark — bulky powerhouse
-8. Scizor 🐛⚙️ — Bug/Steel — physical attacker with priority potential
-9. Greninja 🌊🌑 — Water/Dark — speed + versatility
-10. Mamoswine 🧊🌍 — Ice/Ground — excellent coverage and physical damage \n\n:::""").lower().strip()
+                    
+                    pokemon_avail= {"Charizard": ["Fire", "Flying"],
+                                    "Garchomp": ["Dragon", "Ground"],
+                                    "Lucario": ["Fighting", "Steel"],
+                                    "Gengar": ["Ghost", "Poison"],
+                                    "Gyarados": ["Water", "Flying"],
+                                    "Metagross": ["Steel", "Psychic"],
+                                    "Tyranitar": ["Rock", "Dark"],
+                                    "Scizor": ["Bug", "Steel"],
+                                    "Greninja": ["Water", "Dark"],
+                                    "Mamoswine": ["Ice", "Ground"]
+                                    }
+                    
+                    print(f"The available pokemons are:")
 
-                    difficulty = int(input("Difficulty\n1. Easy\n2. Medium\n3. Hard\n4. Extreme\n"))
+                    for pokemon, data in pokemon_avail.items():
+                        print(f"{pokemon}: {data}")
+                        
+                    user_pokemon = input("Enter the Name of the pokemon ::: ").lower().strip()
+                    
+                    difficulty = input("Difficulty\n1. Easy\n2. Medium\n3. Hard\n4. God\n").lower().strip()
 
                     #computer = PokemonData(comp_pokemon)
                     #battle_mechs = Battle_Mechanincs(player, ai)
@@ -207,6 +216,10 @@ while True:
                         
                         if len(selected_moves.keys()) == 4:
                             break
+                        
+                        
+                    battle_mech = Battle_Mechanincs(player)
+
                     
 
 
