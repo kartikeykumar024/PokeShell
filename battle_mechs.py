@@ -1,3 +1,5 @@
+from random import randint   
+
 ##############            HELPER FUNCTIONS            ####################
 
 def _type_iteration(type_list, value, type_to_check, multiplier):
@@ -19,40 +21,50 @@ class Computer():
         
         self.pokemon_avail = pokemon_avail
         self.player = player
+        self.pokemon_pool = {}
         
-    def get_pokemon_pool(self):
-        pokemon_pool = {}
-                
+        
+    def get_pokemon_pool(self):                
         del self.pokemon_avail[self.player.name]
         
         for pokemon, types in self.pokemon_avail.items():
-            pokemon_pool[pokemon] = {"types": types, "score": [1, 1]}
+            self.pokemon_pool[pokemon] = {"types": types, "score": 1}
             
-        return pokemon_pool
-
             
-    def get_pokemon(self):
+    def pokemon_scoring(self):
         pokemon_pool = self.get_pokemon_pool()
         
         for pokemon, data in pokemon_pool.items():
             for types in data["types"]:
                 
                 data["score"] = _type_iteration(self.player.x2_types, 2, types, data["score"])
-                data["score"] = _type_iteration(self.player.half_moves, .5, types, data["score"])
-                data["score"] = _type_iteration(self.player.immune_moves, 0, types, data["score"])
+                data["score"] = _type_iteration(self.player.half_types, .5, types, data["score"])
+                data["score"] = _type_iteration(self.player.immune_types, 0, types, data["score"])
+                
+        
+    def get_comp_pokemon(self, difficulty):
+        
+        if difficulty == "easy":    
+            pokemon = sorted(self.pokemon_pool.items(), key= lambda m: m[1]["score"])[0]
 
             
+        elif difficulty == "medium":
+            pokemon = sorted(self.pokemon_pool.items(), key= lambda m: m[1]["score"])
+            pokemon = pokemon[len(pokemon)// 2]
             
-            
-            '''def _type_iteration(list, value, type_to_check, multiplier):
         
-        for type in list:    
-            if type == type_to_check:
-                
-                multiplier *= value
-                
-                
-        return multiplier'''
+        elif difficulty == "hard":
+            pokemon = sorted(self.pokemon_pool.items(), key= lambda m: m[1]["score"], reverse= True)
+            pokemon = pokemon[randint(1,2)]
+            
+        
+        elif difficulty == "god":
+            pokemon = sorted(self.pokemon_pool.items(), key= lambda m: m[1]["score"], reverse= True)[0]
+            
+            
+        pokemon_name = pokemon[0]
+            
+
 
 
 
